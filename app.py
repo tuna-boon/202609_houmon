@@ -37,7 +37,7 @@ housecall_master = conn.read(
 )
 
 facility_setting = conn.read(
-    worksheet="774374041",
+    worksheet="67935683",
     ttl=0,
 )
 
@@ -60,7 +60,45 @@ for df in [
 # 施設設定
 # =========================
 
-setting = facility_setting.iloc[0]
+# URL例:
+# https://xxxx.streamlit.app/?facility=f_7a9c2e81
+
+facility_id = st.query_params.get("facility")
+
+if not facility_id:
+    st.error(
+        "施設IDが指定されていません。"
+        "配布された専用URLからアクセスしてください。"
+    )
+    st.stop()
+
+facility_rows = facility_setting[
+    (
+        facility_setting["facility_id"]
+        .astype(str)
+        .str.strip()
+        == str(facility_id).strip()
+    )
+    & (
+        facility_setting["active"]
+        .astype(str)
+        .str.strip()
+        == "はい"
+    )
+]
+
+if facility_rows.empty:
+    st.error(
+        "施設設定が見つからないか、"
+        "現在利用停止になっています。"
+    )
+    st.stop()
+
+setting = facility_rows.iloc[0]
+
+facility_name = str(
+    setting["facility_name"]
+).strip()
 
 support_type = str(
     setting["home_care_support_type"]
@@ -122,6 +160,10 @@ st.caption(
 # =========================
 
 st.subheader("施設情報")
+
+st.caption(
+    f"施設：{facility_name}"
+)
 
 facility_class_label = {
     "FUNC_BED": "機能強化型在支診・在支病（病床あり）",
