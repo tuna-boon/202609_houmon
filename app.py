@@ -27,22 +27,22 @@ st.set_page_config(
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 point_master = conn.read(
-    worksheet="27352578",
+    worksheet=st.secrets["sheets"]["point_master"],
     ttl=0,
 )
 
 housecall_master = conn.read(
-    worksheet="1152867488",
+    worksheet=st.secrets["sheets"]["housecall_master"],
     ttl=0,
 )
 
 facility_setting = conn.read(
-    worksheet="67935683",
+    worksheet=st.secrets["sheets"]["facility_setting"],
     ttl=0,
 )
 
 add_master = conn.read(
-    worksheet="1280055342",
+    worksheet=st.secrets["sheets"]["add_master"],
     ttl=0,
 )
 
