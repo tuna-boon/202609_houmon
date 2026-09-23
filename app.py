@@ -1,6 +1,5 @@
 import streamlit as st
-from admin_facility import run_facility_admin
-from streamlit_gsheets import GSheetsConnection
+#from streamlit_gsheets import GSheetsConnection
 
 from housecall_route import run_housecall_route
 from visit_route import run_visit_route
@@ -28,9 +27,9 @@ st.set_page_config(
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # 管理画面判定を先に行う
-mode = str(
-    st.query_params.get("mode", "")
-).strip().lower()
+# mode = str(
+#     st.query_params.get("mode", "")
+# ).strip().lower()
 
 # 施設設定は管理画面でも必要なので先に読む
 facility_setting = conn.read(
@@ -43,14 +42,14 @@ facility_setting.columns = facility_setting.columns.str.strip()
 # 管理画面
 # =========================
 
-if mode == "admin":
-    run_facility_admin(
-        st,
-        conn,
-        facility_setting,
-        st.secrets["sheets"]["facility_setting"],
-    )
-    st.stop()
+# if mode == "admin":
+#     run_facility_admin(
+#         st,
+#         conn,
+#         facility_setting,
+#         st.secrets["sheets"]["facility_setting"],
+#     )
+#     st.stop()
 
 # 通常画面で使う残りのマスターを読む
 point_master = conn.read(
