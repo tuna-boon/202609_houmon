@@ -1,4 +1,5 @@
 import streamlit as st
+from admin_facility import run_facility_admin
 from streamlit_gsheets import GSheetsConnection
 
 from housecall_route import run_housecall_route
@@ -62,6 +63,17 @@ for df in [
 
 # URL例:
 # https://xxxx.streamlit.app/?facility=f_7a9c2e81
+
+facility_worksheet = st.secrets["sheets"]["facility_setting"]
+
+if st.query_params.get("mode") == "admin":
+    run_facility_admin(
+        st,
+        conn,
+        facility_setting,
+        facility_worksheet,
+    )
+    st.stop()
 
 facility_id = st.query_params.get("facility")
 
