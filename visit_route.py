@@ -214,7 +214,7 @@ def run_visit_route(
         frequency_class = "M2"
 
     st.success(
-        f"在医総管の判定区分：{frequency_class}"
+        f"在医総管の判定区分（M1 月1回,M2 月2回,SEVERE 難病,ONLINE オンライン）：{frequency_class}"
     )
 
     # -------------------------
